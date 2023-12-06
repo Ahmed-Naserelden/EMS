@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    {% for mes in messages %}
+        <p style="color: red;"> {{ mes }} </p>
+    {% endfor %}
+    <div>
+        
+        <form action="" method="POST">
+            {% csrf_token %}
+            <p>Name</p>
+            <input type="text" name="username">
+            <p>password</p>
+            <input type="password" name="password">
+            <p></p>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+
+    <p><a href="{% url 'signup' %}">I have not an account</a></p>
+</body>
+</html>

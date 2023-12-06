@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+
+    {% for mes in messages %}
+        <p style="color: red;"> {{ mes }} </p>
+    {% endfor %}
+    <div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {{ form.as_table  }}
+            <p> </p>
+            Name <input type="text" name="user_name">
+            <p></p>
+            phone <input type="tel" name="phone" id="">
+            <p></p>
+            <label>Level</label>
+            <select name="level" id="">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="3">4</option>
+            </select>
+
+            <p></p>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <p><a href="{%url 'signin'%}">I have an account</a></p>
+
+</body>
+</html>

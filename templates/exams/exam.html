@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam</title>
+    <style>
+        .question{
+            border: 1px solid black;
+            padding: 10px;
+            /* text-align: center; */
+            /* width: 700px; */
+            /* margin-left: calc(50% - 350px); */
+            font-size: 10px;
+            font-weight: bold;
+            margin: 10px;
+        }
+        body{
+            padding: 0px;
+            margin: 0px;
+        }
+        header, footer{
+            text-align: center;
+            color: aliceblue;
+            background-color: rgb(17, 74, 139);
+            height: 50px;
+            padding: 0px;
+            margin: 0px;
+        }
+        footer{
+            position: relative;
+            
+        }
+    </style>
+</head>
+<body>
+    <header><h1>Exam {{ contest }}</h1></header>
+    {% for mes in messages %}
+        <p style="color: red;"> {{ mes }} </p>
+    {% endfor %}
+
+
+    <p id="grade">Your Grade: __ </P>
+
+    <button onclick="getData('{{contest_id}}')">submit</button> 
+    {% comment %} <button onclick="">submit</button> {% endcomment %}
+
+    <!-- <form action=""> -->
+    {% for q in questions %} 
+        <div>
+            
+            <div class="question">
+                <p> #Question  {{ q.title }} : </p>
+                
+                <input id="a" type="radio" name="{{q.pk}}" value="A. {{ q.A }}"> 
+                <label for="{{ q.A }}">A. {{ q.A }} </label><br>
+
+                <input id="b" type="radio" name="{{q.pk}}" value="B. {{ q.B }}">
+                <label>B. {{ q.B }} </label> <br>
+
+                <input id="c" type="radio" name="{{q.pk}}" value="C. {{ q.C }}">
+                <label>C. {{ q.C }} </label> <br>
+
+                <input id="d" type="radio" name="{{q.pk}}" value="D. {{ q.D }}">
+                <label>D. {{ q.D }} </label> <br>
+            </div>
+        </div>  
+        {% endfor %} 
+    
+    <!-- </form> -->
+        
+
+    <footer></footer>
+</body>
+
+<script src="{% static 'js/script_1.js' %}"></script>
+</html>

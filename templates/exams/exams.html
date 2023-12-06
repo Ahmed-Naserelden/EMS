@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contests</title>
+    
+    <style>
+        .contest{
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+            width: 700px;
+            margin-left: calc(50% - 350px);
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        body{
+            padding: 0px;
+            margin: 0px;
+        }
+
+        header, footer{
+            text-align: center;
+            color: aliceblue;
+            background-color: rgb(17, 74, 139);
+            height: 50px;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        footer{
+            position: absolute;
+            bottom: 10px;
+            /* top: 0; */
+            
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+
+        <h1>Exams</h1>
+    </header>
+
+    <p>Wellcome {{ request.user }}. <a href="{% url 'signout' %}"> Signout </a></p> 
+
+    {% for mes in messages %}
+        <p style="color: red;"> {{ mes }} </p>
+    {% endfor %}
+
+    {% for contst in contests %} 
+        <div>
+            
+            <div class="contest">
+                <a href="{% url 'exam' contst.pk  %}">Exam</a>
+                <p>subject: {{ contst.subject }} | Level: {{ contst.level }}</p>
+                <hr>
+                {% comment %} <p>description: {{ contst.description }}</p> {% endcomment %}
+            </div>
+        </div>
+        
+    {% endfor %} 
+    
+    <footer></footer>
+    
+</body>
+</html>
