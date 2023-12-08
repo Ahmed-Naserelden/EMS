@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Add Teacher</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -25,11 +24,14 @@
         }
 
         form {
+            display: grid;
+            grid-gap: 15px;
+            grid-template-columns: 1fr 1fr;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            width: 500px;
+            width: 700px;
             max-width: 80%;
             box-sizing: border-box;
             margin-bottom: 20px;
@@ -40,7 +42,7 @@
             margin-bottom: 10px;
         }
 
-        input {
+        input, select, textarea {
             width: 100%;
             padding: 15px;
             box-sizing: border-box;
@@ -49,26 +51,25 @@
             transition: border-color 0.3s, box-shadow 0.3s;
         }
 
-        input:focus {
-            border-color: #4caf50;
-            box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
-            outline: none;
+        .button-container {
+            grid-column: span 2;
+            display: flex;
+            justify-content: space-between;
         }
 
-        input[type="submit"] {
+        input[type="submit"], input[type="button"] {
             background-color: #4caf50;
             border: none;
             color: white;
             cursor: pointer;
             padding: 15px;
-            width: 100%;
-            margin-top: 20px;
-            margin-bottom: 20px;
             border-radius: 4px;
             transition: background-color 0.3s;
+            flex-grow: 1;
+            margin-right: 10px;
         }
 
-        input[type="submit"]:hover {
+        input[type="submit"]:hover, input[type="button"]:hover {
             background-color: #45a049;
         }
 
@@ -77,6 +78,7 @@
             text-decoration: none;
             display: block;
             text-align: center;
+            margin-top: 10px;
         }
 
         a:hover {
@@ -87,23 +89,44 @@
             color: red;
             margin-top: 10px;
             text-align: center;
+            grid-column: span 2;
         }
     </style>
 </head>
 <body>
-    <h1>Login</h1>
-    {% for mes in messages %}
-        <p class="error-message">{{ mes }}</p>
-    {% endfor %}
-    <form action="" method="POST">
-        {% csrf_token %}
+    <h1>Add Teacher</h1>
+    <form action="" method="post">
         <p>Username</p>
         <input type="text" name="username" placeholder="Enter your username" required>
+        
+        <p>Email</p>
+        <input type="email" name="email" placeholder="Enter your email" required>
+
         <p>Password</p>
         <input type="password" name="password" placeholder="Enter your password" required>
-        <input type="submit" value="Login">
-    </form>
-    <p><a href="{% url 'signup' %}">Don't have an account? Sign up here</a></p>
 
+        <p>Repeat Password</p>
+        <input type="password" name="repeat_password" placeholder="Repeat your password" required>
+
+        <p>Major</p>
+        <input type="text" name="major" placeholder="Enter your major" required>
+        
+        <p>Phone</p>
+        <input type="text" name="phone" placeholder="Enter your phone" required>
+        
+        <p>Address</p>
+        <input type="text" name="address" placeholder="Enter your address" required>
+        
+        <p>Salary</p>
+        <input type="text" name="salary" placeholder="Enter your salary" required>
+
+        <p>Birth Date</p>
+        <input type="date" name="birthdate" required>
+
+        <div class="button-container">
+            <input type="button" value="Delete Teacher">
+            <input type="submit" value="Add Teacher">
+        </div>
+    </form>
 </body>
 </html>

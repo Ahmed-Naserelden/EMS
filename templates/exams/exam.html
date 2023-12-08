@@ -1,79 +1,129 @@
-{% load static %}
 
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam</title>
     <style>
-        .question{
-            border: 1px solid black;
-            padding: 10px;
-            /* text-align: center; */
-            /* width: 700px; */
-            /* margin-left: calc(50% - 350px); */
-            font-size: 10px;
-            font-weight: bold;
-            margin: 10px;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
         }
-        body{
-            padding: 0px;
-            margin: 0px;
-        }
-        header, footer{
+
+        header, footer {
             text-align: center;
-            color: aliceblue;
-            background-color: rgb(17, 74, 139);
-            height: 50px;
-            padding: 0px;
-            margin: 0px;
+            color: #fff;
+            background-color: #2c3e50;
+            padding: 1em 0;
+
         }
-        footer{
-            position: relative;
-            
+
+        h1 {
+            margin: 0;
+            color: #ecf0f1;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .question{
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+     
+
+        p {
+            margin: 0;
+            color: #34495e;
+        }
+
+        #grade{
+            margin-bottom: 30px;
+        }
+        
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+            margin-bottom: 100px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        
+        footer {
+            text-align: center;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 1em 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
+
 <body>
-    <header><h1>Exam {{ contest }}</h1></header>
-    {% for mes in messages %}
-        <p style="color: red;"> {{ mes }} </p>
-    {% endfor %}
+    <header>
+        <h1> {{ subject }} Exam </h1>
+    </header>
 
+    <div class="container">
+        {% for mes in messages %}
+            <p style="color: red;">{{ mes }}</p>
+        {% endfor %}
 
-    <p id="grade">Your Grade: __ </P>
+        
+        <p id="grade"></p>
 
-    <button onclick="getData('{{contest_id}}')">submit</button> 
-    {% comment %} <button onclick="">submit</button> {% endcomment %}
-
-    <!-- <form action=""> -->
-    {% for q in questions %} 
-        <div>
-            
+        {% for q in questions %}
             <div class="question">
-                <p> #Question  {{ q.title }} : </p>
-                
-                <input id="a" type="radio" name="{{q.pk}}" value="A. {{ q.A }}"> 
+                <p>#Question {{ q.title }}:</p>
+
+                <input id="a" type="radio" name="{{q.pk}}" value="A. {{ q.A }}">
                 <label for="{{ q.A }}">A. {{ q.A }} </label><br>
 
                 <input id="b" type="radio" name="{{q.pk}}" value="B. {{ q.B }}">
-                <label>B. {{ q.B }} </label> <br>
+                <label for="{{ q.B }}">B. {{ q.B }} </label><br>
 
                 <input id="c" type="radio" name="{{q.pk}}" value="C. {{ q.C }}">
-                <label>C. {{ q.C }} </label> <br>
+                <label for="{{ q.C }}">C. {{ q.C }} </label><br>
 
                 <input id="d" type="radio" name="{{q.pk}}" value="D. {{ q.D }}">
-                <label>D. {{ q.D }} </label> <br>
+                <label for="{{ q.D }}">D. {{ q.D }} </label><br>
             </div>
-        </div>  
-        {% endfor %} 
-    
-    <!-- </form> -->
-        
+        {% endfor %}
+        <button onclick="getData('{{contest_id}}')">Submit</button>
+    </div>
 
-    <footer></footer>
+    <footer>&copy; 2023 Your Company. All rights reserved.</footer>
 </body>
 
 <script src="{% static 'js/script_1.js' %}"></script>
+
 </html>

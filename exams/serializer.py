@@ -30,7 +30,18 @@ class ExamSerializer(serializers.ModelSerializer):
             exam.questions.add(q)
         # validated_data['questions_data'] = questions_data
         return exam
-
+    
+    def update(self, instance, validated_data):
+        instance.subject = validated_data.get('subject', instance.subject)
+        instance.level = validated_data.get('level', instance.level)
+        instance.save()
+        questions_data = validated_data.pop('questions')
+        instance.questions.all().delete()
+        for question_data in  questions_data:
+            q = Question.objects.create(**question_data)
+            instance.questions.add(q)
+        
+        return instance
 class StudentAnswerSerializer(serializers.ModelSerializer):
     
     class Meta:

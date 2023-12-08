@@ -104,3 +104,21 @@ def signout(request):
     logout(request)
 
     return Response({'message': 'Logout successful'}, status=200)
+
+
+def teacherprofile(request, pk):
+    teacher = Teacher.objects.get(pk=pk)
+    user = User.objects.get(pk=pk)
+    return render(request, 'accounts/teacher_details.html',{'teacher': teacher, 'personal_data': user})
+
+def studentprofile(request, pk):
+    student = Student.objects.get(pk=pk)
+    user = User.objects.get(pk=pk)
+    return render(request, 'accounts/student_details.html', {'student': student, 'personal_data': user})
+
+
+def getAllInSchool(request):
+    students = Student.objects.all()
+    teachers = Teacher.objects.all()
+    
+    return render(request, 'accoutns/all_in_school.html', {'students': student, 'teachers': teachers})

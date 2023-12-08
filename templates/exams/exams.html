@@ -1,71 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contests</title>
-    
+
     <style>
-        .contest{
-            border: 1px solid black;
-            padding: 10px;
+        body {
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        header, footer {
+            background-color: #003366;
+            color: #fff;
             text-align: center;
-            width: 700px;
-            margin-left: calc(50% - 350px);
-            font-size: 10px;
+            padding: 1em 0;
+        }
+
+        header h1, footer p {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .contest {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .contest:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .contest a {
+            color: #003366;
+            text-decoration: none;
             font-weight: bold;
+        }
+
+        .contest a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+    
+        
+        button {
+            padding: 10px 20px;
+            background-color: #003366;
+            
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
             margin-bottom: 10px;
         }
 
-        body{
-            padding: 0px;
-            margin: 0px;
+        button:hover {
+            background-color: #2980b9;
         }
 
-        header, footer{
-            text-align: center;
-            color: aliceblue;
-            background-color: rgb(17, 74, 139);
-            height: 50px;
-            padding: 0px;
-            margin: 0px;
-        }
-
-        footer{
-            position: absolute;
-            bottom: 10px;
-            /* top: 0; */
-            
-        }
+        
     </style>
 </head>
 
 <body>
     <header>
-
         <h1>Exams</h1>
     </header>
 
-    <p>Wellcome {{ request.user }}. <a href="{% url 'signout' %}"> Signout </a></p> 
+    <div class="container">
+        <p>Welcome {{ request.user }}. <a href="{% url 'signout' %}" style="color: #fff;">Sign out</a></p>
 
-    {% for mes in messages %}
-        <p style="color: red;"> {{ mes }} </p>
-    {% endfor %}
+        {% if 1 == 1 %}
+        <a href="{% url 'addexam' %}"><button>Add Exam</button></a>
+        {% endif %}
 
-    {% for contst in contests %} 
-        <div>
-            
+        {% for mes in messages %}
+            <p style="color: red;">{{ mes }}</p>
+        {% endfor %}
+
+        {% for contst in contests %}
             <div class="contest">
-                <a href="{% url 'exam' contst.pk  %}">Exam</a>
-                <p>subject: {{ contst.subject }} | Level: {{ contst.level }}</p>
+                <a href="{% url 'exam' contst.pk %}">Exam</a>
+                <p>Subject: {{ contst.subject }}</p> 
+                <p>Level: {{ contst.level }}</p>
+                {% if 1 == 1 %}
                 <hr>
-                {% comment %} <p>description: {{ contst.description }}</p> {% endcomment %}
+
+                <a class="risk" style="font-size: 12px; color:cornflowerblue" href="{% url 'deletexam' contst.pk %}">Delete</a>
+                <a class="risk" style="font-size: 12px; color:cornflowerblue" href="{% url 'editexam' contst.pk %}">Edit</a>
+                
+                <!-- Uncomment the line below if you want to display the description -->
+                <!-- <p>Description: {{ contst.description }}</p> -->
+                
+                {% endif %}
             </div>
-        </div>
+        {% endfor %}
         
-    {% endfor %} 
-    
-    <footer></footer>
-    
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+    </footer>
+
 </body>
+
 </html>

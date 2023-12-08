@@ -11,6 +11,9 @@ urlpatterns = [
     
     path('teachers/<int:pk>', views.TeacherDetail.as_view(), name='student-list'),
     path('students/<int:pk>', views.StudentDetail.as_view(), name='teacher-list'),
+    
+    path('teacherprofile/<int:pk>/', views.teacherprofile, name='teacherprofile'),
+    path('studentprofile/<int:pk>/', views.studentprofile, name='studentprofile'),
 
     # token authentications
     path('api-token-auth/', obtain_auth_token),

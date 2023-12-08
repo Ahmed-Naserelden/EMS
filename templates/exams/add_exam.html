@@ -1,0 +1,152 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Exam</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .exam {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 80%;
+            max-width: 600px;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        label span {
+            margin-right: 10px;
+        }
+
+        input {
+            margin-bottom: 5px;
+            padding: 15px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+            outline: none;
+        }
+
+        .choices {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .choices label {
+            flex: 1 0 50%;
+            display: block;
+        }
+
+        button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="exam">
+        <h1>Teacher Can Add Exam</h1>
+
+        <button onclick="collectAndSubmit()">Add Exam</button>
+
+        <label for="subject">
+            <span>Subject:</span>
+            <input type="text" name="subject" class="subject">
+        </label>
+
+        <label for="level">
+            <span>Level:</span>
+            <input type="number" name="level" value="1" max="4" min="1">
+        </label>
+        
+        <hr>
+        <div class="questions">
+            <div>
+                <div class="questiondata">
+                    <label for="question_name">
+                        <span>Question:</span>
+                        <input type="text" name="question" class="question">
+                    </label>
+
+                    <div class="choices">
+                        <label for="choiceA">
+                            <span>A:</span>
+                            <input type="text" class="A">
+                        </label>
+
+                        <label for="choiceB">
+                            <span>B:</span>
+                            <input type="text" class="B">
+                        </label>
+
+                        <label for="choiceC">
+                            <span>C:</span>
+                            <input type="text" class="C">
+                        </label>
+
+                        <label for="choiceD">
+                            <span>D:</span>
+                            <input type="text" class="D">
+                        </label>
+                    </div>
+
+                    <label for="answer">
+                        <span>Answer:</span>
+                        <input type="text" class="answer">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="addQuestion()">Add Question</button>
+    </div>
+
+    <script src="{% static 'js/add_exam.js' %}"></script>
+    <!-- <script src="add_exam.js"></script> -->
+</body>
+</html>

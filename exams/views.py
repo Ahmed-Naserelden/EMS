@@ -19,6 +19,9 @@ from django.contrib.auth.decorators import login_required
 
 from EMS.views import signin as go_to_singin
 
+from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.http import require_POST
+
 # Create your views here.
 
 
@@ -27,8 +30,8 @@ class ExamList(generics.ListCreateAPIView):
     serializer_class = ExamSerializer
 
     # authentication_classes = [BasicAuthentication]
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsTeacherOrReadOnly]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsTeacherOrReadOnly]
 
 
 
@@ -58,7 +61,6 @@ def getStudAnswer(request, exam, student):
 
 
 
-
 class QuestionList(generics.ListCreateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
@@ -78,8 +80,6 @@ class QuestionDetail(generics.RetrieveUpdateDestroyAPIView):
 
     # authentication_classes = [TokenAuthentication]   
     # permission_classes = [IsTeacherOrReadOnly]
-
-
 
 
 class StudentAnswerListCreateView(generics.ListCreateAPIView):
@@ -108,9 +108,10 @@ def exam(request, pk):
     #  res = CostestQuestion.objects.filter(contest_id=pk)
     #     questions = [q.question_id for q in res]
     
-    questions = Exam.objects.get(pk=pk).questions.all()
+    exam = Exam.objects.get(pk=pk)
+    questions = exam.questions.all()
     print("questions => ", questions)
-    return render(request, 'exams/exam.html', {'questions': questions, "contest_id": pk})
+    return render(request, 'exams/exam.html', {'questions': questions, "contest_id": pk, "subject": exam.subject})
     # return redirect(go_to_singin)
 def exams(request):
     
@@ -120,4 +121,20 @@ def exams(request):
     messages.info(request, 'you must Login')
     return redirect(go_to_singin)
 
+def addexam(request):
+    return render(request, 'exams/add_exam.html', {})
 
+
+def editexam(request, pk):
+    
+    exam = Exam.objects.get(pk=pk)
+    exam = ExamSerializer(exam).data
+    
+
+    return render(request, 'exams/edit_exam.html', {"exam": exam, 'pk': pk})
+
+require_POST
+def deletexam(request, pk):
+    exam = get_object_or_404(Exam, pk=pk)
+    exam.delete()
+    return redirect(exams)

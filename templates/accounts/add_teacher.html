@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Add Teacher</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -20,18 +20,21 @@
         h1 {
             color: #333;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 30px;
         }
 
         form {
+            display: grid;
+            grid-gap: 15px;
+            grid-template-columns: 1fr 1fr;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             padding: 30px;
-            width: 600px;
+            width: 800px;
             max-width: 80%;
             box-sizing: border-box;
-            margin-bottom: 0px;
+            margin-bottom: 20px;
         }
 
         p {
@@ -39,32 +42,24 @@
             margin-bottom: 10px;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
-            padding: 13px;
+            padding: 15px;
             box-sizing: border-box;
-            margin-bottom: 0px;
             border: 1px solid #ddd;
             border-radius: 4px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
-        select{
-            margin-bottom: 10px;
-        }
+
         input[type="submit"] {
+            grid-column: span 2;
             background-color: #4caf50;
             border: none;
             color: white;
             cursor: pointer;
-            padding: 13px;
-            width: 100%;
-            margin-bottom: 0px;
+            padding: 15px;
             border-radius: 4px;
             transition: background-color 0.3s;
-        }
-
-        ul, span{
-            display: none;
         }
 
         input[type="submit"]:hover {
@@ -86,30 +81,41 @@
             color: red;
             margin-top: 10px;
             text-align: center;
+            grid-column: span 2;
         }
     </style>
 </head>
 <body>
-    <h1>Register</h1>
-    {% for mes in messages %}
-        <p class="error-message">{{ mes }}</p>
-    {% endfor %}
-    <form action="" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p>Name</p>
-        <input type="text" name="user_name" placeholder="Enter your name" required>
+    <h1>Add Teacher</h1>
+    <form action="" method="post">
+        <p>Username</p>
+        <input type="text" name="username" placeholder="Enter your username" required>
+        
+        <p>Email</p>
+        <input type="email" name="email" placeholder="Enter your email" required>
+
+        <p>Password</p>
+        <input type="password" name="password" placeholder="Enter your password" required>
+
+        <p>Repeat Password</p>
+        <input type="password" name="repeat_password" placeholder="Repeat your password" required>
+
+        <p>Major</p>
+        <input type="text" name="major" placeholder="Enter your major" required>
+        
         <p>Phone</p>
-        <input type="tel" name="phone" placeholder="Enter your phone number" required>
-        <p>Level</p>
-        <select name="level" required>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-        </select>
-        <input type="submit" value="Register">
+        <input type="text" name="phone" placeholder="Enter your phone" required>
+        
+        <p>Address</p>
+        <input type="text" name="address" placeholder="Enter your address" required>
+        
+        <p>Salary</p>
+        <input type="text" name="salary" placeholder="Enter your salary" required>
+
+        <p>Birth Date</p>
+        <input type="date" name="birthdate" required>
+
+        <input type="submit" value="Add Teacher">
     </form>
-    <p><a href="{% url 'signin' %}">Already have an account? Sign in here</a></p>
 </body>
 </html>

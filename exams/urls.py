@@ -14,9 +14,12 @@ urlpatterns = [
     path('exam-attempts/<int:pk>/', views.ExamAttemptRetrieveUpdateDestroyView.as_view()),
     
     path('exam/<int:pk>', views.exam, name='exam'),
+    path('addexam/', views.addexam, name='addexam'),
+    path('editexam/<int:pk>/', views.editexam, name='editexam'),
 
     path('', views.exams, name='exams'),
-
+    
+    path('deletexam/<int:pk>', views.deletexam, name='deletexam'),
     path('exam/answers/<int:pk>', views.getAnswers, name='answers'),
     path('exam/answers/<int:exam>/<int:student>', views.getStudAnswer, name='student-answers'),
 ]

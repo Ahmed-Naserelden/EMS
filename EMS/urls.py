@@ -23,7 +23,8 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('exams/', include('exams.urls')),
     path('signin/', views.signin, name='signin'),
-    path('signup/', views.signup, name='signup')
+    path('signup/', views.signup, name='signup'),
+    path('accounts/', include('accounts.urls'))
     
     # path('accounts/', include('django.contrib.auth.urls')),
 ]
