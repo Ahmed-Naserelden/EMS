@@ -94,6 +94,24 @@
     </style>
 </head>
 <body>
+    <nav>
+        <a href="{% url 'myprofile' %}">My Profile</a>
+        <a href="{% url 'exams' %}">Exams</a>
+        {% if is_teacher%}
+        <a href="{% url 'all-in-school' %}">Services</a>
+        {% endif %}
+        {% if manger %}
+        <a href="{% url 'add-teacher' %}">Add Teacher</a>
+        {% endif %}
+        <a href="#">Contact</a>
+        <a href="{% url 'signout' %}">logout</a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+    </nav>
+    
     <h1>Add Teacher</h1>
     <form action="" method="post">
         <p>Username</p>

@@ -53,7 +53,7 @@
 
         input[type="submit"] , button {
             grid-column: span 2;
-            background-color: #4caf50;
+            background-color:  #003366;
             border: none;
             color: white;
             cursor: pointer;
@@ -63,7 +63,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color:  #001122;
         }
 
         a {
@@ -88,18 +88,52 @@
             display: flex;
         }
 
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background-color: #002255a0;
+            padding: 0.5em;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1em;
+            margin: 0 0.5em;
+        }
+
+
     </style>
 </head>
 <body>
+    <nav>
+        <a href="{% url 'myprofile' %}">My Profile</a>
+        <a href="{% url 'exams' %}">Exams</a>
+        {% if is_teacher%}
+        <a href="{% url 'all-in-school' %}">Services</a>
+        {% endif %}
+        {% if manger %}
+        <a href="{% url 'add-teacher' %}">Add Teacher</a>
+        {% endif %}
+        <a href="#">Contact</a>
+        <a href="{% url 'signout' %}">logout</a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+    </nav>
+
     <h1>Student Details</h1>
     <form action="" method="post">
+        {% csrf_token %}
         <p>Username</p>
         <input type="text" name="username" placeholder="Name" value="{{ personal_data.username }}">
         
         <p>Email</p>
         <input type="email" name="email" placeholder="Email" value="{{ personal_data.email }}">
 
-        <p>Major</p>
+        <p>Level</p>
         <input type="text" name="level" placeholder="Level" value="{{student.level}}">
         
         <p>Phone</p>
@@ -112,8 +146,13 @@
         <input type="date" name="birthdate" value="2003-12-18">
 
         <div class="button-container">
-            <input style="color: white; background-color: red; margin-right:5px" type="button" value="Delete Teacher">
-            <input type="submit" value="Edit Student">
+            {% if not hide or manger %}
+            <input style="color: white; background-color: red; margin-right:5px" type="button" value="Delete Student">
+            {% endif %}
+
+            {% if not is_teacher or manger %}
+            <input type="submit" value="Save Student">
+            {% endif %}
         </div>
     </form>
 </body>

@@ -52,7 +52,7 @@
             margin-bottom: 10px;
         }
         input[type="submit"] {
-            background-color: #4caf50;
+            background-color: #003366;
             border: none;
             color: white;
             cursor: pointer;
@@ -72,14 +72,14 @@
         }
 
         a {
-            color: #4caf50;
+            color: black;
             text-decoration: none;
             display: block;
             text-align: center;
         }
 
         a:hover {
-            text-decoration: underline;
+            color: 003366;
         }
 
         p.error-message {
@@ -97,8 +97,8 @@
     <form action="" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <p>Name</p>
-        <input type="text" name="user_name" placeholder="Enter your name" required>
+        <p>Email</p>
+        <input type="email" name="email" placeholder="Enter your Email" required>
         <p>Phone</p>
         <input type="tel" name="phone" placeholder="Enter your phone number" required>
         <p>Level</p>

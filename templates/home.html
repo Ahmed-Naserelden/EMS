@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #003366;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background-color: #002255;
+            padding: 0.5em;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1em;
+            margin: 0 0.5em;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #003366;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Exam Management System</h1>
+    </header>
+
+    <nav>
+        <a href="{% url 'myprofile' %}">My Profile</a>
+        <a href="{% url 'exams' %}">Exams</a>
+        {% if is_teacher%}
+        <a href="{% url 'all-in-school' %}">Services</a>
+        {% endif %}
+        {% if manger %}
+        <a href="{% url 'add-teacher' %}">Add Teacher</a>
+        {% endif %}
+        <a href="#">Contact</a>
+        <a href="{% url 'signout' %}">logout</a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+    </nav>
+    
+    <main>
+        <h2>Welcome to Our Website!</h2>
+        
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Your Website Name. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

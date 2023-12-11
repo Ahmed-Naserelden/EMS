@@ -86,6 +86,21 @@
             background-color: #2980b9;
         }
 
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background-color: #002255;
+            padding: 0.5em;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1em;
+            margin: 0 0.5em;
+        }
+
+
         
     </style>
 </head>
@@ -94,11 +109,27 @@
     <header>
         <h1>Exams</h1>
     </header>
-
+    <nav>
+        <a href="{% url 'myprofile' %}">My Profile</a>
+        <a href="{% url 'exams' %}">Exams</a>
+        {% if is_teacher%}
+        <a href="{% url 'all-in-school' %}">Services</a>
+        {% endif %}
+        {% if manger %}
+        <a href="{% url 'add-teacher' %}">Add Teacher</a>
+        {% endif %}
+        <a href="#">Contact</a>
+        <a href="{% url 'signout' %}">logout</a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+    </nav>
     <div class="container">
         <p>Welcome {{ request.user }}. <a href="{% url 'signout' %}" style="color: #fff;">Sign out</a></p>
 
-        {% if 1 == 1 %}
+        {% if is_teacher %}
         <a href="{% url 'addexam' %}"><button>Add Exam</button></a>
         {% endif %}
 
@@ -112,11 +143,14 @@
                 <p>Subject: {{ contst.subject }}</p> 
                 <p>Level: {{ contst.level }}</p>
                 {% if 1 == 1 %}
+
+                {% if is_teacher %}
                 <hr>
 
                 <a class="risk" style="font-size: 12px; color:cornflowerblue" href="{% url 'deletexam' contst.pk %}">Delete</a>
                 <a class="risk" style="font-size: 12px; color:cornflowerblue" href="{% url 'editexam' contst.pk %}">Edit</a>
                 
+                {% endif %}
                 <!-- Uncomment the line below if you want to display the description -->
                 <!-- <p>Description: {{ contst.description }}</p> -->
                 
@@ -133,3 +167,5 @@
 </body>
 
 </html>
+
+

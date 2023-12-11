@@ -53,7 +53,7 @@
 
         input[type="submit"] {
             grid-column: span 2;
-            background-color: #4caf50;
+            background-color: #003366;
             border: none;
             color: white;
             cursor: pointer;
@@ -83,11 +83,29 @@
             text-align: center;
             grid-column: span 2;
         }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background-color: #002255;
+            padding: 0.5em;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1em;
+            margin: 0 0.5em;
+        }
     </style>
 </head>
 <body>
+    
     <h1>Add Teacher</h1>
+    {% for mes in messages %}
+        <p class="error-message">{{ mes }}</p>
+    {% endfor %}
     <form action="" method="post">
+        {% csrf_token   %}
         <p>Username</p>
         <input type="text" name="username" placeholder="Enter your username" required>
         

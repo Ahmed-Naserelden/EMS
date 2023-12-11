@@ -9,21 +9,22 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 
 from django.contrib import messages
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # from exams import views as ev
 import exams
-from accounts.models import Principle
+from accounts.models import Principle, Student
+
+
 # # Create your views here.
+
 
 def signin(request):
 
     if request.user.is_anonymous == False:
-        # if request.user != 'admin':
-        pass
-        # return redirect(cv.contests)
-        # else: 
-        #     return redirect(manage)
-        
+        return redirect(exams.views.exams)
+    
     if request.method == 'POST':
 
         username = request.POST['username']
@@ -40,32 +41,46 @@ def signin(request):
     return render(request, 'login.html')
 
 def signup(request):
-    # if request.user.is_anonymous == False:
-    #     return redirect(cv.contests)
+    if request.user.is_anonymous == False:
+        return redirect(exams.views.exams)
 
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        # form = SignUpForm(request.POST)
         username = form.data['username']
-        u_name = request.POST['user_name']
         phone = request.POST['phone']
         level = request.POST['level']
-
+        email = request.POST['email']
         print('form.username', username)
-        print('Name: ', u_name)
         print('Level: ', level)
 
         if form.is_valid():
-            form.save()
-            user = User.objects.get(username=username)
-            # student = Student(id=user, level=level, name=u_name,)
-            # student.save()
-            # """
-            return redirect(signin)
+            try:
+                form.save()
+                user = User.objects.get(username=username)
+                try:
+                    student = Student(user=user, phone=phone, level=level)
+                    student.save()
+                    print("<<<<<<<<<<< Saved >>>>>>>>>>>")
+                    user.email = email
+                    user.save()
+                except:
+                    user.delete()
+                    messages.info(request,'Register is not Successfully')
+                    return redirect(signup)
+                return redirect(signin)
+            except:
+                messages.info(request,'Register is not Successfully')
         else:
             messages.info(request,'Register is not Successfully')
 
     form = UserCreationForm()
-    
-    # form = SignUpForm()
     return render(request, 'register.html', {'form': form})
+
+def home(request):
+    if request.user.is_anonymous == True:
+        return redirect(signin)
+    return render(request, 'home.html')
+
+def signout(request):
+    logout(request)
+    return redirect(signin)

@@ -63,8 +63,8 @@ class _TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher
         fields = '__all__'
-        # extra_kwargs = {'password': {'write_only': True}}
-
+        
+        
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teacher

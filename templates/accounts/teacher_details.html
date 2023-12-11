@@ -1,3 +1,8 @@
+
+
+{% load static %}
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +58,7 @@
 
         input[type="submit"] , button{
             grid-column: span 2;
-            background-color: #4caf50;
+            background-color: #003366;
             border: none;
             color: white;
             cursor: pointer;
@@ -65,7 +70,7 @@
         
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: #001122;
         }
 
         a {
@@ -91,11 +96,43 @@
         .button-container{
             display: flex;
         }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background-color: #002255a0;
+            padding: 0.5em;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1em;
+            margin: 0 0.5em;
+        }
     </style>
 </head>
 <body>
+    <nav>
+        <a href="{% url 'myprofile' %}">My Profile</a>
+        <a href="{% url 'exams' %}">Exams</a>
+        {% if is_teacher%}
+        <a href="{% url 'all-in-school' %}">Services</a>
+        {% endif %}
+        {% if manger %}
+        <a href="{% url 'add-teacher' %}">Add Teacher</a>
+        {% endif %}
+        <a href="#">Contact</a>
+        <a href="{% url 'signout' %}">logout</a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+    </nav>
     <h1>Teacher Details </h1>
     <form action="" method="post">
+        {% csrf_token %}
         <p>Username</p>
         <input type="text" name="username" placeholder="Enter your username" value="{{ personal_data.username }}">
         
@@ -118,9 +155,13 @@
         <input type="date" name="birthdate" value="2003-12-18">
 
         <div class="button-container">
-            <input style="color: white; background-color: red; margin-right:5px" type="button" value="Delete Teacher">
-            <input type="submit" value="Add Teacher">
+            <input type="submit" value="Save Teacher">
+            
         </div>
     </form>
+    
+    
+        
 </body>
+<script src="{% static 'js/edit_teacher.js' %}"></script>
 </html>
