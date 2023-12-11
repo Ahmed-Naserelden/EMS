@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
-from .models import Student, Teacher
+from .models import Student, Teacher, Notification
 from django.contrib import messages
 
 from rest_framework import status
@@ -207,3 +207,45 @@ def myprofile(request):
         user = request.user;
         student = Student.objects.get(pk=request.user.pk)
         return render(request, 'accounts/student_details.html', {'student': student, 'personal_data': user, 'hide': True, "manger": is_manager, "is_teacher": is_teacher})
+    
+
+
+
+    
+def notifications(request):
+    if request.method == 'POST':
+        message = request.POST['message']
+        level = request.POST['level'] 
+        # created_at = request.POST['created_at']
+        
+        students = Student.objects.filter(level=level)
+        for stude  in students:
+            noti = Notification(student=stude, message=message)
+            noti.save()
+        return render(request, 'notifications.html')
+    
+    else :
+        try:
+            stude = Student.objects.get(user=request.user)
+            notifications = Notification.objects.filter(student=stude) #, is_read=False).order_by('-created_at')
+            
+            context = {
+                "notifications": notifications,
+                "is_student": True
+            }
+            print("c333")
+            return render(request, "notifications.html", context)
+        except:
+            pass
+       
+    return render(request, "notifications.html", {"is_teacher": True})
+
+def mark_as_read(request, notification_id):
+    try:
+        stude = Student.objects.get(user=request.user)
+        notification = Notification.objects.get(pk=notification_id, student=stude)
+        notification.is_read = True
+        notification.save()
+    except Notification.DoesNotExist:
+        pass
+    return redirect("notifications")

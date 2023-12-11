@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Notification</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #002255;
+        }
+        form {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #002255;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #333;
+        }
+        .unread {
+            font-weight: bold;
+            color: #e44d26;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            background-color: #002255;
+            padding: 0.5em;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 1em;
+            margin: 0 0.5em;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'myprofile' %}">My Profile</a>
+        <a href="{% url 'exams' %}">Exams</a>
+        {% if is_teacher%}
+        <a href="{% url 'all-in-school' %}">Services</a>
+        {% endif %}
+        {% if manger %}
+        <a href="{% url 'add-teacher' %}">Add Teacher</a>
+        {% endif %}
+        <a href="{% url 'notifications' %}">Notification</a>
+        <a href="{% url 'signout' %}">logout</a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+        <a href="#"></a><a href="#"></a><a href="#"></a>
+    </nav>
+    <h1>Notification</h1>
+
+    {% if not is_student %}
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="level">Level:</label>
+        <input type="number" name="level" min="1" max="4" required>
+        
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+        
+        <button type="submit">Create Notification</button>
+    </form>
+    {% endif %}
+
+    <ul>
+        {% for notification in notifications %}
+        <li>
+            <a href="{% url 'mark_as_read' notification.id %}">
+                {% if not notification.is_read %}
+                <span class="unread">{{ notification.message }}</span>
+                {% else %}
+                {{ notification.message }}
+                {% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
