@@ -210,18 +210,26 @@ def myprofile(request):
     
 
 
-
+from .designpatterns import Factor, WhatsAppNotification
     
 def notifications(request):
     if request.method == 'POST':
         message = request.POST['message']
-        level = request.POST['level'] 
-        # created_at = request.POST['created_at']
+        level = request.POST['level']
         
-        students = Student.objects.filter(level=level)
-        for stude  in students:
-            noti = Notification(student=stude, message=message)
-            noti.save()
+        factor = Factor()
+        way = factor.sendNotification('web')
+        way.setMessage(message)
+        way.setLevel(level)
+        way.send()
+        
+        
+        # students = Student.objects.filter(level=level)
+        # for stude  in students:
+        #     noti = Notification(student=stude, message=message)
+        #     noti.save()
+        
+        
         return render(request, 'notifications.html')
     
     else :
@@ -233,7 +241,7 @@ def notifications(request):
                 "notifications": notifications,
                 "is_student": True
             }
-            print("c333")
+
             return render(request, "notifications.html", context)
         except:
             pass

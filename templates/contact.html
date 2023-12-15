@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Notification</title>
+    <title>Contact</title>
     <style>
+
         body {
             font-family: 'Arial', sans-serif;
             margin: 20px;
@@ -74,6 +75,22 @@
             padding: 1em;
             margin: 0 0.5em;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #002255;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +104,9 @@
         <a href="{% url 'add-teacher' %}">Add Teacher</a>
         {% endif %}
         <a href="{% url 'notifications' %}">Notification</a>
+        {% if manger %}
         <a href="{% url 'contact' %}">Contact</a>
+        {% endif %}
         <a href="{% url 'signout' %}">Logout</a>
         <a href="#"></a><a href="#"></a><a href="#"></a>
         <a href="#"></a><a href="#"></a><a href="#"></a>
@@ -95,34 +114,61 @@
         <a href="#"></a><a href="#"></a><a href="#"></a>
         <a href="#"></a><a href="#"></a><a href="#"></a>
     </nav>
-    <h1>Notification</h1>
-
-    {% if not is_student %}
+    
+    <h1 style="text-align: center;">Report</h1>
+    {% if is_student %}
     <form method="post">
         {% csrf_token %}
+
+        <label for="name">Name:</label>
+        <input type="text" name="uname" required>
         
         <label for="level">Level:</label>
         <input type="number" name="level" min="1" max="4" required>
         
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
+        <label for="message">Issue:</label>
+        <textarea id="issue" name="issue" rows="18" required></textarea>
         
-        <button type="submit">Create Notification</button>
+        <button type="submit">Report</button>
     </form>
     {% endif %}
 
-    <ul>
-        {% for notification in notifications %}
-        <li>
-            <a href="{% url 'mark_as_read' notification.id %}">
-                {% if not notification.is_read %}
-                <span class="unread">{{ notification.message }}</span>
-                {% else %}
-                {{ notification.message }}
-                {% endif %}
-            </a>
-        </li>
+    {% if manger %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>Issue</th>
+            <th>Solve</th>
+        </tr>
+        {% for report in reports %}
+            {% if not report.is_read %}
+                <tr>
+                    <td>
+                        {{report.user.username}}
+
+                    </td>
+
+                    <td>
+                        {{report.level}}
+                    </td>
+
+                    <td>
+                        
+                        {{ report.issue }}
+                        
+                    </td>
+                    
+                    <td>
+                        <a href="{% url 'mark_report_as_read' report.id %}" style="font-size: larger;">
+                            Solve
+                        </a>
+                    </td>
+                </tr>
+            {% endif %}
         {% endfor %}
-    </ul>
+    </table>
+    {% endif %}
+
 </body>
 </html>

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-
+from .designpatterns import Monitor, Level1Exam, Level2Exam, Level3Exam #, MonthExam, FinalExam
 from .models import Exam, Question, ExamAttempt, StudentAnswer
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -24,12 +24,22 @@ class ExamSerializer(serializers.ModelSerializer):
         
     def create(self, validated_data):
         questions_data = validated_data.pop('questions')
-        exam = Exam.objects.create(**validated_data)
-        for question_data in  questions_data:
-            q = Question.objects.create(**question_data)
-            exam.questions.add(q)
-        # validated_data['questions_data'] = questions_data
-        return exam
+        # examkind = validated_data.pop('examkind')
+        
+        # exam = Exam.objects.create(**validated_data)
+        # for question_data in  questions_data:
+        #     q = Question.objects.create(**question_data)
+        #     exam.questions.add(q)
+        
+        
+        exam = Level1Exam()
+        if validated_data['level'] == 2:
+            exam = Level2Exam()
+        elif validated_data['level'] == 3:
+            exam = Level3Exam()
+        monitor = Monitor(exam)
+        
+        return monitor.createExam(validated_data, questions_data)
     
     def update(self, instance, validated_data):
         instance.subject = validated_data.get('subject', instance.subject)
@@ -42,6 +52,7 @@ class ExamSerializer(serializers.ModelSerializer):
             instance.questions.add(q)
         
         return instance
+
 class StudentAnswerSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -53,6 +64,7 @@ class ExamAttemptSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamAttempt
         fields = '__all__'
+
 
 class StudentExamAnswerSerializer(serializers.ModelSerializer):
     class Meta:

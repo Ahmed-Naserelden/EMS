@@ -28,6 +28,8 @@ urlpatterns = [
     path('signout/', views.signout, name='signout'),
     
     path('accounts/', include('accounts.urls')),
+    path('contact/', views.contact, name='contact'),
+    path("mark_as_read/<int:report_id>", views.mark_as_read, name="mark_report_as_read"),
     path('', views.home),
     
     # path('accounts/', include('django.contrib.auth.urls')),

@@ -101,6 +101,8 @@ class ExamAttemptRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView
     serializer_class = ExamAttemptSerializer
     
 import EMS
+from .designpatterns import Proxy
+
 
 def exam(request, pk):
     if request.user.is_anonymous == True:
@@ -109,9 +111,11 @@ def exam(request, pk):
     #  res = CostestQuestion.objects.filter(contest_id=pk)
     #     questions = [q.question_id for q in res]
     
-    exam = Exam.objects.get(pk=pk)
+    # exam = Exam.objects.get(pk=pk)
+    proxy = Proxy()
+    exam = proxy.getExam(pk)
     questions = exam.questions.all()
-    print("questions => ", questions)
+    # print("questions => ", questions)
     return render(request, 'exams/exam.html', {'questions': questions, "contest_id": pk, "subject": exam.subject})
     # return redirect(go_to_singin)
 def exams(request):
@@ -152,3 +156,4 @@ def deletexam(request, pk):
     exam = get_object_or_404(Exam, pk=pk)
     exam.delete()
     return redirect(exams)
+

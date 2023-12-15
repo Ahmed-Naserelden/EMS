@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 # from exams import views as ev
 import exams
-from accounts.models import Principle, Student
+from accounts.models import Student, Report
 
 
 # # Create your views here.
@@ -84,3 +84,53 @@ def home(request):
 def signout(request):
     logout(request)
     return redirect(signin)
+
+def contact(request):
+
+    user = request.user
+    
+    if request.method == 'POST':
+        uname = request.POST['uname']
+        level = request.POST['level']
+        issue = request.POST['issue']
+
+        report = Report(user=user, level=level, issue=issue)
+        
+        report.save()
+        
+
+    else:
+        reports = Report.objects.filter(is_read=False)
+
+        manger = False
+        is_student = False
+        
+        
+        if user.groups.filter(name='Principle').exists():
+            manger = True
+
+        elif not user.groups.filter(name='Teacher_Group').exists():
+            is_student = True
+
+        return render(request, 'contact.html', {
+            'reports': reports, 
+            'manger': manger, 
+            'is_student': is_student
+        })
+        
+    return render(request, 'contact.html')
+
+def mark_as_read(request, report_id):
+
+    try:
+        report = Report.objects.get(pk=report_id)
+        report.is_read = True
+        report.save()
+
+
+    except Report.DoesNotExist:
+        pass
+
+    return redirect("contact")
+
+
